@@ -25,6 +25,8 @@ class Account(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, null=True, blank=True)
     screen_limit = models.SmallIntegerField(default = 3)
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
 
 class Screen(models.Model):
     created_at = models.DateField(auto_now=True)

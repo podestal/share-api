@@ -5,11 +5,17 @@ from uuid import uuid4
 class ScreenSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Screen
-        fields = ['available', 'customer', 'price']
+        fields = ['id', 'available', 'customer', 'price']
 
-    def save(self, **kwargs):
-        account_id=self.context['account_id']
-        return models.Screen.objects.create(account_id= account_id, **self.validated_data)
+    # def save(self, **kwargs):
+    #     account_id=self.context['account_id']
+
+    #     return models.Screen.objects.create(**self.validated_data)
+    
+    def update(self, instance, validated_data):
+        print(self.validated_data)
+        
+        return super().update(instance, validated_data)
 
 
 class AccountSerializer(serializers.ModelSerializer):
