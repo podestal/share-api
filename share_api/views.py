@@ -19,3 +19,7 @@ class AccountViewSet(ModelViewSet):
         if self.request.method == 'POST':
             return serializers.CreateAccountSerializer
         return serializers.AccountSerializer
+    
+class CustomerViewSet(ModelViewSet):
+    queryset = models.Customer.objects.all()
+    serializer_class = serializers.CustomerSerializer

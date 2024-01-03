@@ -4,6 +4,7 @@ from . import views
 router = routers.DefaultRouter()
 
 router.register('accounts', views.AccountViewSet)
+router.register('customers', views.CustomerViewSet)
 
 screen_router = routers.NestedDefaultRouter(router, 'accounts', lookup='accounts')
 screen_router.register('screens', views.ScreeViewSet, basename='screens')

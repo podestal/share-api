@@ -5,17 +5,18 @@ from uuid import uuid4
 class ScreenSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Screen
-        fields = ['id', 'available', 'customer', 'price']
+        fields = ['id', 'available', 'customer', 'price', 'account_id']
 
     # def save(self, **kwargs):
     #     account_id=self.context['account_id']
 
     #     return models.Screen.objects.create(**self.validated_data)
     
-    def update(self, instance, validated_data):
-        print(self.validated_data)
-        
-        return super().update(instance, validated_data)
+    # def update(self, instance, validated_data):
+    #     print(self.validated_data)
+    #     available_screens = models.Screen.objects.filter(account_id = self.context['account_id'], available=True)
+    #     print(len(available_screens) - 1)
+    #     return super().update(instance, validated_data)
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -30,7 +31,7 @@ class CreateAccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Account
-        fields = ['platform', 'customer', 'price']
+        fields = ['platform', 'customer', 'price', 'username', 'password']
 
     def save(self, **kwargs):
         id = uuid4()
@@ -51,3 +52,9 @@ class CreateAccountSerializer(serializers.ModelSerializer):
         models.Screen.objects.bulk_create(screens)
 
         return account
+
+class CustomerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Customer
+        fields = '__all__'

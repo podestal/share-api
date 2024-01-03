@@ -2,7 +2,8 @@ from django.db import models
 from django.conf import settings
 
 class Customer(models.Model):
-        customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+        user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+        active = models.BooleanField(default=False)
 
 class Account(models.Model):
 
