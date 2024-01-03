@@ -1,11 +1,8 @@
 from django.db import models
 from django.conf import settings
 
-
-class Screen(models.Model):
-    created_at = models.DateField(auto_now=True)
-    available = models.BooleanField(default=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, blank=True)
+class Customer(models.Model):
+        customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
 class Account(models.Model):
 
@@ -23,6 +20,16 @@ class Account(models.Model):
 
     created_at = models.DateField(auto_now=True)
     platform = models.CharField(max_length=1, choices=PLATFORM_CHOICES, default=PLATFORM_NETFLIX)
-    screen = models.ForeignKey(Screen, on_delete=models.CASCADE)
     available = models.BooleanField(default=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, blank=True)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, null=True, blank=True)
+    screen_limit = models.SmallIntegerField()
+
+    def __str__(self):
+         return self.platform
+
+class Screen(models.Model):
+    created_at = models.DateField(auto_now=True)
+    available = models.BooleanField(default=True)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, blank=True, null=True)
+    Account = models.ForeignKey(Account, on_delete=models.CASCADE)
+
