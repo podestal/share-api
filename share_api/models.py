@@ -18,18 +18,18 @@ class Account(models.Model):
         (PLATFORM_PRIME, 'Prime'),
     ]
 
+    id = models.UUIDField(primary_key=True)
     created_at = models.DateField(auto_now=True)
     platform = models.CharField(max_length=1, choices=PLATFORM_CHOICES, default=PLATFORM_NETFLIX)
     available = models.BooleanField(default=True)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, null=True, blank=True)
-    screen_limit = models.SmallIntegerField()
-
-    def __str__(self):
-         return self.platform
+    screen_limit = models.SmallIntegerField(default = 3)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
 
 class Screen(models.Model):
     created_at = models.DateField(auto_now=True)
     available = models.BooleanField(default=True)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, blank=True, null=True)
-    Account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='screens')
+    price = models.DecimalField(max_digits=6, decimal_places=2)
 

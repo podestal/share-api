@@ -3,7 +3,10 @@ from . import views
 
 router = routers.DefaultRouter()
 
-router.register('screens', views.ScreeViewSet)
 router.register('accounts', views.AccountViewSet)
 
-urlpatterns = router.urls
+screen_router = routers.NestedDefaultRouter(router, 'accounts', lookup='accounts')
+screen_router.register('screens', views.ScreeViewSet, basename='screens')
+
+
+urlpatterns = router.urls + screen_router.urls
