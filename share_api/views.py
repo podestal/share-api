@@ -1,7 +1,13 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
+# from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from . import models
 from . import serializers
+
+class ServiceViewSet(ModelViewSet):
+    queryset = models.Service.objects.all()
+    serializer_class = serializers.SerivceSerializer
+    # authentication_classes = 
 
 class ScreeViewSet(ModelViewSet):
     queryset = models.Screen.objects.all()

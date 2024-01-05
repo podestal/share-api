@@ -2,10 +2,10 @@ from django.db import models
 from django.conf import settings
 
 class Customer(models.Model):
-        user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
-        active = models.BooleanField(default=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    active = models.BooleanField(default=False)
 
-class Account(models.Model):
+class Service(models.Model):
 
     PLATFORM_NETFLIX = 'N'
     PLATFORM_DISNEY = 'D'
@@ -19,20 +19,28 @@ class Account(models.Model):
         (PLATFORM_PRIME, 'Prime'),
     ]
 
-    id = models.UUIDField(primary_key=True)
     created_at = models.DateField(auto_now=True)
     platform = models.CharField(max_length=1, choices=PLATFORM_CHOICES, default=PLATFORM_NETFLIX)
     available = models.BooleanField(default=True)
-    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, null=True, blank=True)
     screen_limit = models.SmallIntegerField(default = 3)
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    screen_price = models.DecimalField(max_digits=6, decimal_places=2)
+
+
+class Account(models.Model):
+
+    id = models.UUIDField(primary_key=True)
+    created_at = models.DateField(auto_now=True)
+    Service = models.ForeignKey(Service, on_delete=models.PROTECT)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, null=True, blank=True)
     username = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
 
 class Screen(models.Model):
+    
     created_at = models.DateField(auto_now=True)
     available = models.BooleanField(default=True)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, blank=True, null=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='screens')
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+
 
