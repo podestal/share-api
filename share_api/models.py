@@ -51,8 +51,11 @@ class Screen(models.Model):
     
     created_at = models.DateField(auto_now=True)
     available = models.BooleanField(default=True)
-    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, blank=True, null=True)
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='screens')
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, blank=True, null=True, related_name='screens')
+    subscribed_at = models.DateField(null=True)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='screens', null=True, blank=True)
     period = models.CharField(max_length=1, choices=PERIOD_CHOICES, default=PERIOD_THREE)
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
 
 

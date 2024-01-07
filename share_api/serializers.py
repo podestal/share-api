@@ -63,10 +63,11 @@ class CreateAccountSerializer(serializers.ModelSerializer):
 class CustomerSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
+    screens = ScreenSerializer(many=True)
 
     class Meta:
         model = models.Customer
-        fields = ['id', 'user', 'active']
+        fields = ['id', 'user', 'active', 'screens']
 
 class UpdateCustomerSerializer(serializers.ModelSerializer):
 
