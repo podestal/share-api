@@ -12,12 +12,13 @@ class ServiceViewSet(ModelViewSet):
     serializer_class = serializers.SerivceSerializer
     permission_classes = [permissions.IsAdminOrReadOnly]
 
+class CredentialsViewSet(ModelViewSet):
+    queryset = models.Credentials.objects.all()
+    serializer_class = serializers.CredentialsSerializer
+
 class ScreeViewSet(ModelViewSet):
     queryset = models.Screen.objects.all()
     serializer_class = serializers.ScreenSerializer
-
-    def get_serializer_context(self):
-        return {'account_id': self.kwargs['accounts_pk']}
 
 class AccountViewSet(ModelViewSet):
     queryset = models.Account.objects.all()
@@ -42,3 +43,5 @@ class CustomerViewSet(ModelViewSet):
         (customer, created) = models.Customer.objects.get_or_create(user_id=self.request.user.id)
         serializer = serializers.CustomerSerializer(customer)
         return Response(serializer.data)
+    
+

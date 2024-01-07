@@ -3,6 +3,12 @@ from core.serializers import UserSerializer
 from . import models
 from uuid import uuid4
 
+class CredentialsSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = models.Credentials
+        fields = '__all__'
+
 class SerivceSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -10,9 +16,13 @@ class SerivceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ScreenSerializer(serializers.ModelSerializer):
+
+    # service = SerivceSerializer()
+
     class Meta:
         model = models.Screen
-        fields = ['id', 'available', 'customer', 'price', 'account_id']
+        # fields = ['id', 'created_at', 'available', 'subscribed_at', 'period', 'username', 'password', 'customer']
+        fields = '__all__'
 
     # def save(self, **kwargs):
     #     account_id=self.context['account_id']

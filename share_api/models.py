@@ -27,15 +27,24 @@ class Service(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     screen_price = models.DecimalField(max_digits=6, decimal_places=2)
 
+    def __str__(self):
+        return self.platform
+
 
 class Account(models.Model):
 
     id = models.UUIDField(primary_key=True)
     created_at = models.DateField(auto_now=True)
     Service = models.ForeignKey(Service, on_delete=models.PROTECT)
-    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, null=True, blank=True)
     username = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
+    
+class Credentials(models.Model):
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.username
 
 class Screen(models.Model):
 
@@ -51,10 +60,11 @@ class Screen(models.Model):
     
     created_at = models.DateField(auto_now=True)
     available = models.BooleanField(default=True)
+    service = models.ForeignKey(Service, on_delete=models.PROTECT)
+    credentials = models.ForeignKey(Credentials, on_delete=models.PROTECT)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, blank=True, null=True, related_name='screens')
     subscribed_at = models.DateField(null=True)
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='screens', null=True, blank=True)
-    period = models.CharField(max_length=1, choices=PERIOD_CHOICES, default=PERIOD_THREE)
+    period = models.CharField(max_length=1, choices=PERIOD_CHOICES, default=PERIOD_THREE, null=True, blank=True)
     username = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
 
