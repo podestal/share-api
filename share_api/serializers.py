@@ -17,23 +17,28 @@ class SerivceSerializer(serializers.ModelSerializer):
 
 class ScreenSerializer(serializers.ModelSerializer):
 
-    # service = SerivceSerializer()
-
     class Meta:
         model = models.Screen
-        # fields = ['id', 'created_at', 'available', 'subscribed_at', 'period', 'username', 'password', 'customer']
-        fields = '__all__'
-
-    # def save(self, **kwargs):
-    #     account_id=self.context['account_id']
-
-    #     return models.Screen.objects.create(**self.validated_data)
+        fields = ['id', 'created_at', 'bulk', 'available', 'service', 'subscribed_at', 'period', 'username', 'password', 'customer']
     
-    # def update(self, instance, validated_data):
-    #     print(self.validated_data)
-    #     available_screens = models.Screen.objects.filter(account_id = self.context['account_id'], available=True)
-    #     print(len(available_screens) - 1)
-    #     return super().update(instance, validated_data)
+    def save(self, **kwargs):
+        platform = self.validated_data.get('service')
+        # username = self.validated_data.get('username')
+        # password = self.validated_data.get('password')
+        service = models.Service.objects.get(platform=platform)
+        # (credentials, created) = models.Credentials.objects.get_or_create(username=username, password=password)
+        screens_number = 0
+        if self.validated_data.get('bulk') == True:
+            if service.platform == 'N' or service.platform == 'D':
+                screens_number = 4
+            if service.platform == 'H' or service.platform == 'P':
+                screens_number = 3
+            screens = [models.Screen(
+                **self.validated_data
+            )for screen in range(0, screens_number)]
+            return models.Screen.objects.bulk_create(screens)
+        else:
+            return models.Screen.objects.create(**self.validated_data, credentials)
 
 
 class AccountSerializer(serializers.ModelSerializer):

@@ -59,13 +59,12 @@ class Screen(models.Model):
     ]
     
     created_at = models.DateField(auto_now=True)
+    bulk = models.BooleanField(default=False)
     available = models.BooleanField(default=True)
     service = models.ForeignKey(Service, on_delete=models.PROTECT)
     credentials = models.ForeignKey(Credentials, on_delete=models.PROTECT)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, blank=True, null=True, related_name='screens')
     subscribed_at = models.DateField(null=True)
     period = models.CharField(max_length=1, choices=PERIOD_CHOICES, default=PERIOD_THREE, null=True, blank=True)
-    username = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
 
 
