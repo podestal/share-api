@@ -67,3 +67,9 @@ class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Customer
         fields = ['id', 'user', 'active']
+
+class UpdateCustomerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Customer
+        fields = ['active']

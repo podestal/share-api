@@ -30,11 +30,15 @@ class AccountViewSet(ModelViewSet):
     
 class CustomerViewSet(ModelViewSet):
     queryset = models.Customer.objects.all()
-    serializer_class = serializers.CustomerSerializer
 
-    @action(detail=False, methods=['GET', 'PUT'], permission_classes=[IsAuthenticated])
+    def get_serializer_class(self):
+        if self.request.method == 'PUT':
+            return serializers.UpdateCustomerSerializer
+        return serializers.CustomerSerializer
+        
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def me(self, request):
-        print(self.request.user.id)
-        customer = models.Customer.objects.get(user_id = self.request.user.id)
+        (customer, created) = models.Customer.objects.get_or_create(user_id=self.request.user.id)
         serializer = serializers.CustomerSerializer(customer)
         return Response(serializer.data)
