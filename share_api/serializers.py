@@ -3,57 +3,42 @@ from core.serializers import UserSerializer
 from . import models
 from uuid import uuid4
 
-class CredentialsSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = models.Credentials
-        fields = '__all__'
-
-class SerivceSerializer(serializers.ModelSerializer):
+class ServiceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Service
         fields = '__all__'
 
-class ScreenSerializer(serializers.ModelSerializer):
+class GetScreenSerializer(serializers.ModelSerializer):
+
+    service = ServiceSerializer()
 
     class Meta:
         model = models.Screen
         fields = ['id', 'created_at', 'bulk', 'available', 'service', 'subscribed_at', 'period', 'username', 'password', 'customer']
+
+class CreateScreenSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Screen
+        fields = ['id', 'created_at', 'bulk', 'available', 'subscribed_at', 'period', 'username', 'password', 'customer', 'service']
     
     def save(self, **kwargs):
         platform = self.validated_data.get('service')
-        # username = self.validated_data.get('username')
-        # password = self.validated_data.get('password')
         service = models.Service.objects.get(platform=platform)
-        # (credentials, created) = models.Credentials.objects.get_or_create(username=username, password=password)
-        screens_number = 0
         if self.validated_data.get('bulk') == True:
-            if service.platform == 'N' or service.platform == 'D':
-                screens_number = 4
-            if service.platform == 'H' or service.platform == 'P':
-                screens_number = 3
             screens = [models.Screen(
                 **self.validated_data
-            )for screen in range(0, screens_number)]
+            )for screen in range(0, service.screen_limit)]
             return models.Screen.objects.bulk_create(screens)
         else:
-            return models.Screen.objects.create(**self.validated_data, credentials)
+            return models.Screen.objects.create(**self.validated_data)
 
+# class CreateAccountSerializer(serializers.ModelSerializer):
 
-class AccountSerializer(serializers.ModelSerializer):
-
-    screens = ScreenSerializer(many=True)
-
-    class Meta:
-        model = models.Account
-        fields = ['id', 'available', 'created_at', 'platform', 'screen_limit', 'customer', 'screens', 'price']
-    
-class CreateAccountSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = models.Account
-        fields = ['platform', 'customer', 'price', 'username', 'password']
+#     class Meta:
+#         model = models.Account
+#         fields = ['platform', 'customer', 'price', 'username', 'password']
 
     # def save(self, **kwargs):
     #     id = uuid4()
@@ -78,11 +63,17 @@ class CreateAccountSerializer(serializers.ModelSerializer):
 class CustomerSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
-    screens = ScreenSerializer(many=True)
+    screens = ServiceSerializer(many=True)
 
     class Meta:
         model = models.Customer
         fields = ['id', 'user', 'active', 'screens']
+
+class CreateCustomerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Customer
+        fields = ['user']
 
 class UpdateCustomerSerializer(serializers.ModelSerializer):
 
