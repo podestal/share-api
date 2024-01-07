@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from core.serializers import UserSerializer
 from . import models
 from uuid import uuid4
 
@@ -61,6 +62,8 @@ class CreateAccountSerializer(serializers.ModelSerializer):
 
 class CustomerSerializer(serializers.ModelSerializer):
 
+    user = UserSerializer()
+
     class Meta:
         model = models.Customer
-        fields = '__all__'
+        fields = ['id', 'user', 'active']

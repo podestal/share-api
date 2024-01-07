@@ -34,8 +34,7 @@ class CustomerViewSet(ModelViewSet):
 
     @action(detail=False, methods=['GET', 'PUT'], permission_classes=[IsAuthenticated])
     def me(self, request):
+        print(self.request.user.id)
         customer = models.Customer.objects.get(user_id = self.request.user.id)
-        serializer = serializers.CustomerSerializer(Response)
-        serializer.is_valid
-        serializer.save()
+        serializer = serializers.CustomerSerializer(customer)
         return Response(serializer.data)
