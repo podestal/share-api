@@ -22,6 +22,8 @@ class ScreeViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return serializers.CreateScreenSerializer
+        if self.request.method == 'PUT':
+            return serializers.UpdateScreenSerializer
         return serializers.GetScreenSerializer
 
     

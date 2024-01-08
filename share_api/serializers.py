@@ -34,6 +34,12 @@ class CreateScreenSerializer(serializers.ModelSerializer):
         else:
             return models.Screen.objects.create(**self.validated_data)
 
+class UpdateScreenSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Screen
+        fields = ['available', 'username', 'password', 'customer', 'period']
+
 # class CreateAccountSerializer(serializers.ModelSerializer):
 
 #     class Meta:
