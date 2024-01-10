@@ -17,7 +17,7 @@ class ServiceViewSet(ModelViewSet):
 class ScreeViewSet(ModelViewSet):
     queryset = models.Screen.objects.all()
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['available', 'service']
+    filterset_fields = ['available', 'service', 'customer']
     
     def get_serializer_class(self):
         if self.request.method == 'POST':
