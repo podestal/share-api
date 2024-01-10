@@ -5,9 +5,15 @@ from uuid import uuid4
 
 class ServiceSerializer(serializers.ModelSerializer):
 
+    screens = serializers.SerializerMethodField(method_name='get_active_screens')
+
     class Meta:
         model = models.Service
-        fields = ['id', 'created_at', 'platform', 'screen_limit', 'price']
+        fields = ['id', 'created_at', 'platform', 'screen_limit', 'price', 'screens']
+
+    def get_active_screens(self, service:models.Service):
+        return (models.Screen.objects.filter(service_id = service.id, available=True)).count()
+
 
 class GetScreenSerializer(serializers.ModelSerializer):
 
