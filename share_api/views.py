@@ -44,6 +44,7 @@ class CustomerViewSet(ModelViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def me(self, request):
+        print(self.request.user.id)
         (customer, created) = models.Customer.objects.get_or_create(user_id=self.request.user.id)
         serializer = serializers.CustomerSerializer(customer)
         return Response(serializer.data)
