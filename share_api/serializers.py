@@ -2,6 +2,7 @@ from rest_framework import serializers
 from core.serializers import UserSerializer
 from . import models
 from uuid import uuid4
+from datetime import date
 
 class ServiceSerializer(serializers.ModelSerializer):
 
@@ -29,11 +30,22 @@ class CreateScreenSerializer(serializers.ModelSerializer):
         model = models.Screen
         fields = ['bulk', 'available', 'subscribed_at', 'username', 'password', 'service']
 
+    def save(self, **kwargs):
+        platform = self.validated_data.get('service')
+        service = models.Service.objects.get(platform=platform)
+        if self.validated_data.get('bulk') == True:
+            screens = [models.Screen(
+                **self.validated_data
+            )for screen in range(0, service.screen_limit)]
+            return models.Screen.objects.bulk_create(screens)
+        else:
+            return models.Screen.objects.create(**self.validated_data)
+
 class UpdateScreenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Screen
-        fields = ['available', 'customer', 'period']
+        fields = ['available', 'customer', 'period', 'subscribed_at']
 
 class CustomerSerializer(serializers.ModelSerializer):
 
