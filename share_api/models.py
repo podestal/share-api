@@ -16,6 +16,12 @@ class Service(models.Model):
     def __str__(self):
         return self.platform
 
+class Feature(models.Model):
+
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+
 
 class Screen(models.Model):
 

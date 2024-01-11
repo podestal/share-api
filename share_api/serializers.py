@@ -4,6 +4,12 @@ from . import models
 from uuid import uuid4
 from datetime import date
 
+class FeaturesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Feature
+        fields = '__all__'
+
 class ServiceSerializer(serializers.ModelSerializer):
 
     screens = serializers.SerializerMethodField(method_name='get_active_screens')

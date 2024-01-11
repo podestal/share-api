@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django_filters.rest_framework import DjangoFilterBackend
+from django_filters import FilterSet
+from django_filters.rest_framework import DjangoFilterBackend, MultipleChoiceFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
@@ -7,6 +8,23 @@ from rest_framework.response import Response
 from . import permissions
 from . import models
 from . import serializers
+
+class FeatureFilter(FilterSet):
+
+    service = MultipleChoiceFilter(
+        name = 'service',
+    )
+
+    class Meta:
+        model = models.Feature
+        fields = '__all__'
+
+class FeatureViewSet(ModelViewSet):
+    queryset = models.Feature.objects.all()
+    serializer_class = serializers.FeaturesSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['service']
+    filter_class = FeatureFilter
 
 class ServiceViewSet(ModelViewSet):
     queryset = models.Service.objects.all()
