@@ -20,7 +20,7 @@ class Feature(models.Model):
 
     title = models.CharField(max_length=255)
     content = models.TextField()
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)
 
 
 class Screen(models.Model):
