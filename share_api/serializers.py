@@ -28,7 +28,7 @@ class GetScreenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Screen
-        fields = ['id', 'created_at', 'bulk', 'available', 'service', 'subscribed_at', 'period', 'username', 'password', 'customer']
+        fields = ['id', 'created_at', 'bulk', 'available', 'service', 'subscribed_at', 'period', 'username', 'password', 'customer', 'due_date']
 
 class CreateScreenSerializer(serializers.ModelSerializer):
 
@@ -51,7 +51,10 @@ class UpdateScreenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Screen
-        fields = ['available', 'customer', 'period', 'subscribed_at']
+        fields = ['available', 'customer', 'period', 'subscribed_at', 'due_date']
+
+    # def update(self, instance, validated_data):
+    #     return super().update(instance, validated_data)
 
 class CustomerSerializer(serializers.ModelSerializer):
 
