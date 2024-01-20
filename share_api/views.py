@@ -68,4 +68,9 @@ class CustomerViewSet(ModelViewSet):
         serializer = serializers.CustomerSerializer(customer)
         return Response(serializer.data)
     
+class MovieViewSet(ModelViewSet):
+
+    queryset = models.Movie.objects.all()
+    serializer_class = serializers.MovieSerializer
+    
 

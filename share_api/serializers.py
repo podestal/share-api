@@ -75,3 +75,9 @@ class UpdateCustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Customer
         fields = ['active']
+
+class MovieSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Movie
+        fields = '__all__'

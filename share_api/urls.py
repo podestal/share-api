@@ -7,6 +7,7 @@ router.register('customers', views.CustomerViewSet, basename='customers')
 router.register('services', views.ServiceViewSet)
 router.register('screens', views.ScreeViewSet)
 router.register('features', views.FeatureViewSet)
+router.register('movies', views.MovieViewSet)
 
 # screen_router = routers.NestedDefaultRouter(router, 'accounts', lookup='accounts')
 # screen_router.register('screens', views.ScreeViewSet, basename='screens')

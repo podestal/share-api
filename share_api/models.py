@@ -45,3 +45,10 @@ class Screen(models.Model):
     subscribed_at = models.DateField(null=True, blank=True)
     period = models.CharField(max_length=1, choices=PERIOD_CHOICES, default=PERIOD_THREE, null=True, blank=True)
     due_date = models.DateField(null=True, blank=True)
+
+class Movie(models.Model):
+
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    services = models.ForeignKey(Service, on_delete=models.PROTECT)
+
