@@ -81,3 +81,15 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Movie
         fields = '__all__'
+
+class OrderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Order
+        fields = '__all__'
+
+class OrderReceiptSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.OrderReceipt
+        fields = '__all__'

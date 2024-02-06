@@ -74,3 +74,23 @@ class MovieViewSet(ModelViewSet):
     serializer_class = serializers.MovieSerializer
     
 
+class OrderViewSet(ModelViewSet):
+
+    queryset = models.Order.objects.all()
+    serializer_class = serializers.OrderSerializer
+
+class OrderReceiptViewSet(ModelViewSet):
+    
+    queryset = models.OrderReceipt.objects.all()
+    serializer_class = serializers.OrderReceiptSerializer
+
+# class ServiceImageViewSet(ModelViewSet):
+
+#     serializer_class = serializers.ServiceImageSerializer
+
+#     def get_serializer_context(self):
+#         return {'service_id': self.kwargs['service_pk']}
+
+#     def get_queryset(self):
+#         return models.ServiceImage.objects.filter(service_id=self.kwargs['service_pk'])
+
