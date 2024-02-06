@@ -16,7 +16,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Service
-        fields = ['id', 'created_at', 'platform', 'screen_limit', 'price', 'screens']
+        fields = ['id', 'created_at', 'platform', 'comercial_name', 'screen_limit', 'price', 'screens']
 
     def get_active_screens(self, service:models.Service):
         return (models.Screen.objects.filter(service_id = service.id, available=True)).count()

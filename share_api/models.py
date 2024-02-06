@@ -9,6 +9,7 @@ class Service(models.Model):
 
     created_at = models.DateField(auto_now=True)
     platform = models.CharField(max_length=255)
+    comercial_name = models.CharField(max_length=255)
     available = models.BooleanField(default=True)
     screen_limit = models.SmallIntegerField(default = 3)
     price = models.DecimalField(max_digits=6, decimal_places=2)
@@ -51,4 +52,26 @@ class Movie(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     services = models.ForeignKey(Service, on_delete=models.PROTECT)
+
+class Order(models.Model):
+
+    STATUS_STARTED = 'S'
+    STATUS_PROCESSING = 'P'
+    STATUS_COMPLETED = 'C'
+
+    STATUS_CHOICES = [
+        (STATUS_STARTED, 'Started'),
+        (STATUS_PROCESSING, 'Processing'),
+        (STATUS_COMPLETED, 'Completed'),
+    ]
+    
+    createdAt = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_STARTED)
+    screen = models.ForeignKey(Screen, on_delete=models.PROTECT, null=True)
+    service = models.ForeignKey(Service, on_delete=models.PROTECT)
+
+class OrderReceipt(models.Model):
+
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_receipt')
+    image = models.ImageField(upload_to='api/images',)
 
