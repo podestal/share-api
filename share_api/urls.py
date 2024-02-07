@@ -13,8 +13,4 @@ router.register('orders', views.OrderViewSet)
 order_router = routers.NestedDefaultRouter(router, 'orders', lookup='order')
 order_router.register('receipts', views.OrderReceiptViewSet, basename='order-receipts')
 
-# screen_router = routers.NestedDefaultRouter(router, 'accounts', lookup='accounts')
-# screen_router.register('screens', views.ScreeViewSet, basename='screens')
-
-
 urlpatterns = router.urls + order_router.urls

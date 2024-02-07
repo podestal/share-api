@@ -82,14 +82,37 @@ class MovieSerializer(serializers.ModelSerializer):
         model = models.Movie
         fields = '__all__'
 
-class OrderSerializer(serializers.ModelSerializer):
+class CreateOrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Order
-        fields = '__all__'
+        fields = ['id', 'status', 'screen', 'service']
+
 
 class OrderReceiptSerializer(serializers.ModelSerializer):
 
+    order = CreateOrderSerializer()
+
     class Meta:
         model = models.OrderReceipt
-        fields = '__all__'
+        fields = ['order', 'image']
+
+    def create(self, validated_data):
+        order_id = self.context['order_id']
+        return models.OrderReceipt.objects.create(order_id=order_id, **validated_data)
+    
+class CreateOrderReceiptSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.OrderReceipt
+        fields = ['image']
+
+class OrderSerializer(serializers.ModelSerializer):
+
+    service = ServiceSerializer()
+    order_receipt = OrderReceiptSerializer(many=True)
+
+    class Meta:
+        model = models.Order
+        fields = ['id', 'status', 'screen', 'service', 'order_receipt']
+

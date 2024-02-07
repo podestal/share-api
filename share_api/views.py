@@ -77,12 +77,24 @@ class MovieViewSet(ModelViewSet):
 class OrderViewSet(ModelViewSet):
 
     queryset = models.Order.objects.all()
-    serializer_class = serializers.OrderSerializer
+    
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return serializers.CreateOrderSerializer
+        return serializers.OrderSerializer
 
 class OrderReceiptViewSet(ModelViewSet):
     
-    queryset = models.OrderReceipt.objects.all()
-    serializer_class = serializers.OrderReceiptSerializer
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return serializers.CreateOrderReceiptSerializer
+        return serializers.OrderReceiptSerializer
+
+    def get_serializer_context(self):
+        return {'order_id': self.kwargs['order_pk']}
+
+    def get_queryset(self):
+        return models.OrderReceipt.objects.filter(order_id=self.kwargs['order_pk'])
 
 # class ServiceImageViewSet(ModelViewSet):
 
