@@ -8,7 +8,7 @@ router.register('services', views.ServiceViewSet)
 router.register('screens', views.ScreeViewSet)
 router.register('features', views.FeatureViewSet)
 router.register('movies', views.MovieViewSet)
-router.register('orders', views.OrderViewSet)
+router.register('orders', views.OrderViewSet, basename='orders')
 
 order_router = routers.NestedDefaultRouter(router, 'orders', lookup='order')
 order_router.register('receipts', views.OrderReceiptViewSet, basename='order-receipts')

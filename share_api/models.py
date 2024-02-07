@@ -69,6 +69,7 @@ class Order(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_STARTED)
     screen = models.ForeignKey(Screen, on_delete=models.PROTECT, null=True)
     service = models.ForeignKey(Service, on_delete=models.PROTECT)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, related_name='orders')
 
 class OrderReceipt(models.Model):
 

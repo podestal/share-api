@@ -2,7 +2,7 @@ from django.shortcuts import render
 from datetime import datetime
 from django_filters import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend, MultipleChoiceFilter
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -48,7 +48,7 @@ class ScreeViewSet(ModelViewSet):
     
 class CustomerViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
-    http_method_names = ['get', 'put']
+    http_method_names = ['get', 'put', 'delete']
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -58,6 +58,8 @@ class CustomerViewSet(ModelViewSet):
         return serializers.CustomerSerializer
     
     def get_queryset(self):
+        if self.request.user.is_staff:
+            return models.Customer.objects.all()
         return models.Customer.objects.filter(user_id=self.request.user.id)
         
 
@@ -85,6 +87,9 @@ class OrderViewSet(ModelViewSet):
         elif self.request.method == 'PATCH':
             return serializers.UpdateOrderSerializer
         return serializers.OrderSerializer
+    
+    def get_serializer_context(self):
+        return {'user_id': self.request.user.id}
 
 class OrderReceiptViewSet(ModelViewSet):
     
