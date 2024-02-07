@@ -77,10 +77,13 @@ class MovieViewSet(ModelViewSet):
 class OrderViewSet(ModelViewSet):
 
     queryset = models.Order.objects.all()
+    http_method_names = ['get', 'post', 'patch', 'delete']
     
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return serializers.CreateOrderSerializer
+        elif self.request.method == 'PATCH':
+            return serializers.UpdateOrderSerializer
         return serializers.OrderSerializer
 
 class OrderReceiptViewSet(ModelViewSet):

@@ -96,16 +96,22 @@ class OrderReceiptSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.OrderReceipt
         fields = ['order', 'image']
-
-    def create(self, validated_data):
-        order_id = self.context['order_id']
-        return models.OrderReceipt.objects.create(order_id=order_id, **validated_data)
     
 class CreateOrderReceiptSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.OrderReceipt
         fields = ['image']
+
+    def create(self, validated_data):
+        order_id = self.context['order_id']
+        return models.OrderReceipt.objects.create(order_id=order_id, **validated_data)
+
+class UpdateOrderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Order
+        fields = ['status']
 
 class OrderSerializer(serializers.ModelSerializer):
 
