@@ -3,6 +3,7 @@ from core.serializers import UserSerializer
 from . import models
 from uuid import uuid4
 from datetime import date
+from core.serializers import UserSerializer
 
 class FeaturesSerializer(serializers.ModelSerializer):
 
@@ -86,11 +87,10 @@ class CreateOrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Order
-        fields = ['id', 'status', 'screen', 'service']
+        fields = ['id', 'status', 'screen', 'service', 'period']
 
     def create(self, validated_data):
-        customer = models.Customer.objects.get(user_id=self.context['user_id'])
-        return models.Order.objects.create(customer_id=customer.id, **validated_data)
+        return models.Order.objects.create(user_id=self.context['user_id'], **validated_data)
 
 
 class OrderReceiptSerializer(serializers.ModelSerializer):
@@ -118,19 +118,19 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
 
     service = ServiceSerializer()
-    order_receipt = OrderReceiptSerializer(many=True)
-
+    order_receipt = OrderReceiptSerializer(many=True, read_only=True)
+    user = UserSerializer()
     class Meta:
         model = models.Order
-        fields = ['id', 'status', 'customer', 'screen', 'service', 'order_receipt']
+        fields = ['id', 'status', 'user', 'screen', 'service', 'order_receipt']
 
 class AdminOrderSerializer(serializers.ModelSerializer):
 
     service = ServiceSerializer()
     order_receipt = OrderReceiptSerializer(many=True)
-    customer = CustomerSerializer()
+    user = UserSerializer()
 
     class Meta:
         model = models.Order
-        fields = ['id', 'status', 'customer', 'screen', 'service', 'order_receipt']
+        fields = ['id', 'status', 'period', 'user', 'screen', 'service', 'order_receipt']
 

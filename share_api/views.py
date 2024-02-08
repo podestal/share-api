@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from datetime import datetime
 from django_filters import FilterSet
+from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend, MultipleChoiceFilter
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.viewsets import ModelViewSet
@@ -47,7 +48,7 @@ class ScreeViewSet(ModelViewSet):
 
     
 class CustomerViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     http_method_names = ['get', 'put', 'delete', 'post']
 
     def get_serializer_class(self):
@@ -65,8 +66,9 @@ class CustomerViewSet(ModelViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def me(self, request):
-        print(self.request.user.id)
+        print('user id',self.request.user.id)
         customer = models.Customer.objects.get(user_id=self.request.user.id)
+        print('customers', customer)
         serializer = serializers.CustomerSerializer(customer)
         return Response(serializer.data)
     
@@ -79,7 +81,10 @@ class MovieViewSet(ModelViewSet):
 class OrderViewSet(ModelViewSet):
 
     http_method_names = ['get', 'post', 'patch', 'delete']
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['status']
+    # ordering_fields = ['status']
 
     
     def get_serializer_class(self):
@@ -97,7 +102,7 @@ class OrderViewSet(ModelViewSet):
     def get_queryset(self):
         if self.request.user.is_staff:
             return models.Order.objects.all()
-        return models.Order.objects.filter(customer_id=self.request.user.id)
+        return models.Order.objects.filter(user_id=self.request.user.id)
 
 class OrderReceiptViewSet(ModelViewSet):
     

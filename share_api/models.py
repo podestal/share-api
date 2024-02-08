@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 
 class Customer(models.Model):
+    
+    
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     active = models.BooleanField(default=False)
 
@@ -68,8 +70,9 @@ class Order(models.Model):
     createdAt = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_STARTED)
     screen = models.ForeignKey(Screen, on_delete=models.PROTECT, null=True)
+    period = models.CharField(max_length=1)
     service = models.ForeignKey(Service, on_delete=models.PROTECT)
-    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, related_name='orders')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class OrderReceipt(models.Model):
 
