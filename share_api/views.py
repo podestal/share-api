@@ -81,7 +81,7 @@ class MovieViewSet(ModelViewSet):
 class OrderViewSet(ModelViewSet):
 
     http_method_names = ['get', 'post', 'patch', 'delete']
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['status']
     # ordering_fields = ['status']
