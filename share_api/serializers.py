@@ -68,7 +68,7 @@ class CreateCustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Customer
-        fields = ['user']
+        fields = ['id', 'user']
 
 class UpdateCustomerSerializer(serializers.ModelSerializer):
 
@@ -88,14 +88,16 @@ class CreateOrderSerializer(serializers.ModelSerializer):
         model = models.Order
         fields = ['id', 'status', 'screen', 'service']
 
+    def create(self, validated_data):
+        customer = models.Customer.objects.get(user_id=self.context['user_id'])
+        return models.Order.objects.create(customer_id=customer.id, **validated_data)
+
 
 class OrderReceiptSerializer(serializers.ModelSerializer):
 
-    order = CreateOrderSerializer()
-
     class Meta:
         model = models.OrderReceipt
-        fields = ['order', 'image']
+        fields = ['image']
     
 class CreateOrderReceiptSerializer(serializers.ModelSerializer):
 
@@ -117,6 +119,16 @@ class OrderSerializer(serializers.ModelSerializer):
 
     service = ServiceSerializer()
     order_receipt = OrderReceiptSerializer(many=True)
+
+    class Meta:
+        model = models.Order
+        fields = ['id', 'status', 'customer', 'screen', 'service', 'order_receipt']
+
+class AdminOrderSerializer(serializers.ModelSerializer):
+
+    service = ServiceSerializer()
+    order_receipt = OrderReceiptSerializer(many=True)
+    customer = CustomerSerializer()
 
     class Meta:
         model = models.Order

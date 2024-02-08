@@ -48,7 +48,7 @@ class ScreeViewSet(ModelViewSet):
     
 class CustomerViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
-    http_method_names = ['get', 'put', 'delete']
+    http_method_names = ['get', 'put', 'delete', 'post']
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -66,7 +66,7 @@ class CustomerViewSet(ModelViewSet):
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def me(self, request):
         print(self.request.user.id)
-        (customer, created) = models.Customer.objects.get_or_create(user_id=self.request.user.id)
+        customer = models.Customer.objects.get(user_id=self.request.user.id)
         serializer = serializers.CustomerSerializer(customer)
         return Response(serializer.data)
     
@@ -78,18 +78,26 @@ class MovieViewSet(ModelViewSet):
 
 class OrderViewSet(ModelViewSet):
 
-    queryset = models.Order.objects.all()
     http_method_names = ['get', 'post', 'patch', 'delete']
+    # permission_classes = [IsAuthenticated]
+
     
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return serializers.CreateOrderSerializer
         elif self.request.method == 'PATCH':
             return serializers.UpdateOrderSerializer
+        if self.request.user.is_staff:
+            return serializers.AdminOrderSerializer
         return serializers.OrderSerializer
     
     def get_serializer_context(self):
         return {'user_id': self.request.user.id}
+    
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return models.Order.objects.all()
+        return models.Order.objects.filter(customer_id=self.request.user.id)
 
 class OrderReceiptViewSet(ModelViewSet):
     
@@ -103,14 +111,3 @@ class OrderReceiptViewSet(ModelViewSet):
 
     def get_queryset(self):
         return models.OrderReceipt.objects.filter(order_id=self.kwargs['order_pk'])
-
-# class ServiceImageViewSet(ModelViewSet):
-
-#     serializer_class = serializers.ServiceImageSerializer
-
-#     def get_serializer_context(self):
-#         return {'service_id': self.kwargs['service_pk']}
-
-#     def get_queryset(self):
-#         return models.ServiceImage.objects.filter(service_id=self.kwargs['service_pk'])
-

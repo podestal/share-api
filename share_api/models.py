@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 
 class Customer(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     active = models.BooleanField(default=False)
 
 class Service(models.Model):
