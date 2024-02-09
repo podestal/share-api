@@ -5,6 +5,7 @@ router = routers.DefaultRouter()
 
 router.register('customers', views.CustomerViewSet, basename='customers')
 router.register('services', views.ServiceViewSet)
+router.register('accounts', views.AccountViewSet, basename='accounts')
 router.register('screens', views.ScreeViewSet)
 router.register('features', views.FeatureViewSet)
 router.register('movies', views.MovieViewSet)

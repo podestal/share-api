@@ -21,6 +21,25 @@ class ServiceSerializer(serializers.ModelSerializer):
 
     def get_active_screens(self, service:models.Service):
         return (models.Screen.objects.filter(service_id = service.id, available=True)).count()
+    
+class AccountSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Account
+        fields = '__all__'
+
+    # def save(self, **kwargs):
+    #     # screen attr 
+    #     # 
+    #     platform = self.validated_data.get('service')
+    #     service = models.Service.objects.get(platform=platform)
+    #     if self.validated_data.get('bulk') == True:
+    #         screens = [models.Screen(
+    #             **self.validated_data
+    #         )for screen in range(0, service.screen_limit)]
+    #         return models.Screen.objects.bulk_create(screens)
+    #     else:
+    #         return models.Screen.objects.create(**self.validated_data)
 
 
 class GetScreenSerializer(serializers.ModelSerializer):

@@ -33,6 +33,11 @@ class ServiceViewSet(ModelViewSet):
     serializer_class = serializers.ServiceSerializer
     permission_classes = [permissions.IsAdminOrReadOnly]
 
+class AccountViewSet(ModelViewSet):
+
+    queryset = models.Account.objects.all()
+    serializer_class = serializers.AccountSerializer
+
 
 class ScreeViewSet(ModelViewSet):
     queryset = models.Screen.objects.all()
