@@ -80,6 +80,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'share.wsgi.application'
 
+# email l.r.p.2991@gmail.com
+# password ehtu zhxh nszp pkud
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'l.r.p.2991@gmail.com'
+EMAIL_HOST_PASSWORD = 'ehtuzhxhnszppkud'
+EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = 'from@podestal.com'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -131,6 +142,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'build/static')
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -158,10 +174,18 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
 
+PASSWORD_RESET_CONFIRM_RETYPE  = True
+
 DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '/username/reset/confirm/{uid}/{token}',
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
         'current_user' : 'core.serializers.UserSerializer',
         'user': 'core.serializers.UserSerializer',
         'user_create': 'core.serializers.CreateUserSerializer',
-    }
+    },
 }

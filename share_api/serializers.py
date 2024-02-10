@@ -48,24 +48,40 @@ class GetScreenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Screen
-        fields = ['id', 'created_at', 'bulk', 'available', 'service', 'subscribed_at', 'period', 'username', 'password', 'customer', 'due_date']
+        fields = ['id', 'created_at', 'position', 'bulk', 'available', 'service', 'subscribed_at', 'period', 'username', 'password', 'customer', 'due_date']
 
 class CreateScreenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Screen
-        fields = ['bulk', 'available', 'subscribed_at', 'username', 'password', 'service']
+        fields = ['bulk', 'account']
 
     def save(self, **kwargs):
-        platform = self.validated_data.get('service')
-        service = models.Service.objects.get(platform=platform)
+        # platform = self.validated_data.get('service')
+        # service = models.Service.objects.get(platform=platform)
+        # if self.validated_data.get('bulk') == True:
+        #     screens = [models.Screen(
+        #         **self.validated_data
+        #     )for screen in range(0, service.screen_limit)]
+        #     return models.Screen.objects.bulk_create(screens)
+        # else:
+        #     return models.Screen.objects.create(**self.validated_data)
+        account = self.validated_data.get('account')
+        screen_limit = account.service.screen_limit
+        service = account.service
+        username = account.username
+        password = account.password
         if self.validated_data.get('bulk') == True:
             screens = [models.Screen(
+                position = screen+1,
+                service = service,
+                username = username,
+                password = password,
                 **self.validated_data
-            )for screen in range(0, service.screen_limit)]
+            )for screen in range(0, screen_limit)]
             return models.Screen.objects.bulk_create(screens)
         else:
-            return models.Screen.objects.create(**self.validated_data)
+            return models.Screen.objects.create(service = service, username = username, password = password, **self.validated_data)
 
 class UpdateScreenSerializer(serializers.ModelSerializer):
 
