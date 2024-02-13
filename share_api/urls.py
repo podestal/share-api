@@ -1,4 +1,5 @@
 from rest_framework_nested import routers
+from django.urls import path
 from . import views
 
 router = routers.DefaultRouter()
@@ -14,4 +15,7 @@ router.register('orders', views.OrderViewSet, basename='orders')
 order_router = routers.NestedDefaultRouter(router, 'orders', lookup='order')
 order_router.register('receipts', views.OrderReceiptViewSet, basename='order-receipts')
 
-urlpatterns = router.urls + order_router.urls
+# urlpatterns = router.urls + order_router.urls
+urlpatterns = [
+    path('password/reset/confirm/<uid>/<token>', views.say_hello)
+] + router.urls + order_router.urls

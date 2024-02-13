@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse    
 from datetime import datetime
 from django_filters import FilterSet
 from rest_framework.filters import OrderingFilter
@@ -121,3 +122,8 @@ class OrderReceiptViewSet(ModelViewSet):
 
     def get_queryset(self):
         return models.OrderReceipt.objects.filter(order_id=self.kwargs['order_pk'])
+
+def say_hello(request, uid, token):
+    print(uid)
+    print(token)
+    return HttpResponse("Hello World")
