@@ -126,4 +126,4 @@ class OrderReceiptViewSet(ModelViewSet):
 def say_hello(request, uid, token):
     print(uid)
     print(token)
-    return HttpResponse("Hello World")
+    return render(request, 'reset.html', {'name': 'Luis'})
