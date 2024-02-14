@@ -27,7 +27,8 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('share_api.urls')),
+    path('', include('core.urls')),
+    path('api/', include('share_api.urls')),
     # path('', say_hello),
     # path('', TemplateView.as_view(template_name='index.html')),
 

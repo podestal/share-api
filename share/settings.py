@@ -186,8 +186,8 @@ CORS_ALLOWED_ORIGINS = [
 PASSWORD_RESET_CONFIRM_RETYPE  = True
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': '/username/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
     'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'ACTIVATION_URL': '/activate/{uid}/{token}',
