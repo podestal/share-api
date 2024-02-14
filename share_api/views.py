@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse    
+from django.http import HttpResponse, HttpResponseRedirect   
 from datetime import datetime
 from django_filters import FilterSet
 from rest_framework.filters import OrderingFilter
@@ -126,4 +126,5 @@ class OrderReceiptViewSet(ModelViewSet):
 def say_hello(request, uid, token):
     print(uid)
     print(token)
-    return render(request, 'reset.html', {'uid': uid,'token': token})
+    # return render(request, 'reset.html', {'uid': uid,'token': token})
+    return HttpResponseRedirect(f'http://localhost:5173/reset_new/{uid}/{token}')
