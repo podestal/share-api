@@ -13,6 +13,7 @@ djangorestframework-simplejwt = "*"
 django-cors-headers = "*"
 django-filter = "*"
 pillow = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
