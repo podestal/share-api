@@ -85,7 +85,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'share.wsgi.application'
 
-# email l.r.p.2991@gmail.com
 # password ehtu zhxh nszp pkud
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -94,7 +93,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = 'from@podestal.com'
+DEFAULT_FROM_EMAIL = 'from@podestal.com'
 
 
 # Database
@@ -192,8 +191,9 @@ DJOSER = {
     'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
     'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
-    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL': True,
     'SERIALIZERS': {
         'current_user' : 'core.serializers.UserSerializer',
         'user': 'core.serializers.UserSerializer',
