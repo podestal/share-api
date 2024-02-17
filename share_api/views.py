@@ -90,7 +90,6 @@ class OrderViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['status']
-    # ordering_fields = ['status']
 
     
     def get_serializer_class(self):

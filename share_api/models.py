@@ -82,6 +82,7 @@ class Order(models.Model):
     screen = models.ForeignKey(Screen, on_delete=models.PROTECT, null=True)
     period = models.CharField(max_length=1)
     service = models.ForeignKey(Service, on_delete=models.PROTECT)
+    days = models.SmallIntegerField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class OrderReceipt(models.Model):
