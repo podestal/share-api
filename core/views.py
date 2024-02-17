@@ -9,13 +9,14 @@ def activate(request, uid, token):
 def reset_password(request, uid, token):
     return HttpResponseRedirect(f'http://localhost:5173/reset_new/{uid}/{token}')
 
-def payment_confirmation(request):
+def payment_confirmation(request, email):
     try:
+        print('request from api', email)
         message = BaseEmailMessage(
             template_name='email/payment.html',
             context={'name': 'Athos'}
         )
-        message.send(['l.r.p.2991@gmail.com'])
+        message.send([email])
 
     except BadHeaderError:
         pass

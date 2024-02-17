@@ -14,10 +14,11 @@ class FeaturesSerializer(serializers.ModelSerializer):
 class ServiceSerializer(serializers.ModelSerializer):
 
     screens = serializers.SerializerMethodField(method_name='get_active_screens')
+    features = FeaturesSerializer(many=True)
 
     class Meta:
         model = models.Service
-        fields = ['id', 'created_at', 'platform', 'comercial_name', 'screen_limit', 'price', 'screens']
+        fields = ['id', 'created_at', 'platform', 'comercial_name', 'screen_limit', 'price', 'screens', 'features']
 
     def get_active_screens(self, service:models.Service):
         return (models.Screen.objects.filter(service_id = service.id, available=True)).count()
@@ -100,7 +101,7 @@ class CreateOrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Order
-        fields = ['id', 'status', 'screen', 'service', 'days', 'period']
+        fields = ['id', 'status', 'total', 'screen', 'service', 'days', 'period']
 
     def create(self, validated_data):
         return models.Order.objects.create(user_id=self.context['user_id'], **validated_data)
@@ -135,7 +136,7 @@ class OrderSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = models.Order
-        fields = ['id', 'days', 'status', 'user', 'screen', 'service', 'order_receipt']
+        fields = ['id', 'days', 'total', 'status', 'user', 'screen', 'service', 'order_receipt']
 
 class AdminOrderSerializer(serializers.ModelSerializer):
 
@@ -145,5 +146,5 @@ class AdminOrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Order
-        fields = ['id', 'days', 'status', 'period', 'user', 'screen', 'service', 'order_receipt']
+        fields = ['id', 'days', 'total', 'status', 'period', 'user', 'screen', 'service', 'order_receipt']
 

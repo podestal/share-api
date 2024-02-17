@@ -22,7 +22,7 @@ class Feature(models.Model):
 
     title = models.CharField(max_length=255)
     content = models.TextField()
-    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True, related_name='features')
 
 class Account(models.Model):
 
@@ -84,6 +84,7 @@ class Order(models.Model):
     service = models.ForeignKey(Service, on_delete=models.PROTECT)
     days = models.SmallIntegerField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    total = models.DecimalField(max_digits=6, decimal_places=2)
 
 class OrderReceipt(models.Model):
 
