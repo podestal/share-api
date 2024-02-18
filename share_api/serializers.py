@@ -101,10 +101,7 @@ class CreateOrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Order
-        fields = ['id', 'status', 'total', 'screen', 'service', 'days', 'period']
-
-    def create(self, validated_data):
-        return models.Order.objects.create(user_id=self.context['user_id'], **validated_data)
+        fields = ['id', 'status', 'total', 'customer', 'screen', 'service', 'days', 'period']
 
 
 class OrderReceiptSerializer(serializers.ModelSerializer):
@@ -133,18 +130,18 @@ class OrderSerializer(serializers.ModelSerializer):
 
     service = ServiceSerializer()
     order_receipt = OrderReceiptSerializer(many=True, read_only=True)
-    user = UserSerializer()
+    customer = CustomerSerializer()
     class Meta:
         model = models.Order
-        fields = ['id', 'days', 'total', 'status', 'user', 'screen', 'service', 'order_receipt']
+        fields = ['id', 'days', 'total', 'status', 'customer', 'screen', 'service', 'order_receipt']
 
 class AdminOrderSerializer(serializers.ModelSerializer):
 
     service = ServiceSerializer()
     order_receipt = OrderReceiptSerializer(many=True)
-    user = UserSerializer()
+    customer = CustomerSerializer()
 
     class Meta:
         model = models.Order
-        fields = ['id', 'days', 'total', 'status', 'period', 'user', 'screen', 'service', 'order_receipt']
+        fields = ['id', 'days', 'total', 'status', 'period', 'customer', 'screen', 'service', 'order_receipt']
 

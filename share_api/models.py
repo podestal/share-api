@@ -83,7 +83,7 @@ class Order(models.Model):
     period = models.CharField(max_length=1)
     service = models.ForeignKey(Service, on_delete=models.PROTECT)
     days = models.SmallIntegerField()
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
     total = models.DecimalField(max_digits=6, decimal_places=2)
 
 class OrderReceipt(models.Model):

@@ -11,9 +11,8 @@ def reset_password(request, uid, token):
 
 def payment_confirmation(request, email):
     try:
-        print('request from api', email)
         message = BaseEmailMessage(
-            template_name='email/payment.html',
+            template_name='emails/payment.html',
             context={'name': 'Athos'}
         )
         message.send([email])

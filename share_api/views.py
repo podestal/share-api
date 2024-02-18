@@ -44,11 +44,12 @@ class ScreeViewSet(ModelViewSet):
     queryset = models.Screen.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['available', 'service', 'customer']
+    http_method_names = ['get', 'post', 'patch', 'delete']
     
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return serializers.CreateScreenSerializer
-        if self.request.method == 'PUT':
+        if self.request.method == 'PATCH':
             return serializers.UpdateScreenSerializer
         return serializers.GetScreenSerializer
 
@@ -101,13 +102,10 @@ class OrderViewSet(ModelViewSet):
             return serializers.AdminOrderSerializer
         return serializers.OrderSerializer
     
-    def get_serializer_context(self):
-        return {'user_id': self.request.user.id}
-    
     def get_queryset(self):
         if self.request.user.is_staff:
             return models.Order.objects.all()
-        return models.Order.objects.filter(user_id=self.request.user.id)
+        return models.Order.objects.all()
 
 class OrderReceiptViewSet(ModelViewSet):
     

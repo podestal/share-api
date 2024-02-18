@@ -1,0 +1,10 @@
+{% block subject%}
+Activación de cuenta
+{% endblock %}
+{% block html_body%}
+<h1>Estimado usuario:</h1>
+<p>Está recibiendo este correo porque necesita terminar el proceso de activación de su cuenta en MyShare</p>
+<p>Porfavor dirígase a la siguiente página para activar su cuenta</p>
+{{ protocol }}://{{ domain }}/{{ url|safe }}
+<p>Muchas gracias por utilizar MyShare</p>
+{% endblock %}
