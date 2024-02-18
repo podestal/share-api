@@ -31,8 +31,14 @@ class FeatureViewSet(ModelViewSet):
 
 class ServiceViewSet(ModelViewSet):
     queryset = models.Service.objects.all()
-    serializer_class = serializers.ServiceSerializer
+
     permission_classes = [permissions.IsAdminOrReadOnly]
+
+    def get_serializer_class(self):
+
+        if self.request.method == 'POST':
+            return serializers.CreateServiceSerializer
+        return serializers.ServiceSerializer
 
 class AccountViewSet(ModelViewSet):
 
