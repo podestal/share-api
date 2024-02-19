@@ -4,10 +4,10 @@ from django.http import HttpResponseRedirect
 from templated_mail.mail import BaseEmailMessage
 
 def activate(request, uid, token):
-    return HttpResponseRedirect(f'http://localhost:5173/activate/{uid}/{token}')
+    return HttpResponseRedirect(f'http://myshare-web.s3-website-us-east-1.amazonaws.com/activate/{uid}/{token}')
 
 def reset_password(request, uid, token):
-    return HttpResponseRedirect(f'http://localhost:5173/reset_new/{uid}/{token}')
+    return HttpResponseRedirect(f'http://myshare-web.s3-website-us-east-1.amazonaws.com/reset_new/{uid}/{token}')
 
 def payment_confirmation(request, email):
     try:

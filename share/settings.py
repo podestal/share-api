@@ -86,10 +86,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'share.wsgi.application'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_HOST_USER = 'mysharessoporte@gmail.com'
+EMAIL_HOST_PASSWORD = 'bdcoqxyjhsihaoho'
 EMAIL_USE_TLS = True
 
 # Database
@@ -98,10 +98,10 @@ EMAIL_USE_TLS = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_AWS_NAME'),
-        'HOST': os.environ.get('DB_AWS_HOST'),
-        'USER': os.environ.get('DB_AWS_USER'),
-        'PASSWORD': os.environ.get('DB_AWS_PASSWORD'),
+        'NAME': 'myshares',
+        'HOST': 'myshares.cnmy06y44h6n.us-east-1.rds.amazonaws.com',
+        'USER': 'admin',
+        'PASSWORD': '13anguloX',
     }
 }
 
