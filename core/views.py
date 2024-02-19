@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from templated_mail.mail import BaseEmailMessage
 
 def activate(request, uid, token):
-    return HttpResponseRedirect(f'http://myshare-web.s3-website-us-east-1.amazonaws.com/activate/{uid}/{token}')
+    return HttpResponseRedirect(f'hhttp://myshare-web.s3-website-us-east-1.amazonaws.com/activate/{uid}/{token}')
 
 def reset_password(request, uid, token):
     return HttpResponseRedirect(f'http://myshare-web.s3-website-us-east-1.amazonaws.com/reset_new/{uid}/{token}')
