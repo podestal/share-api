@@ -178,7 +178,7 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "http://myshare-web.s3-website-us-east-1.amazonaws.com"
+    "http://myshare-web.s3-website-us-east-1.amazonaws.com:5173",
 ]
 
 PASSWORD_RESET_CONFIRM_RETYPE  = True
