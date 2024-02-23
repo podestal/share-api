@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-dhkvpy6=jvd28)(_wyp3aca+@h$h%6wh=g3(yenu&*+qmw718z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".vercel.app"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -102,11 +102,6 @@ DATABASES = {
         'PASSWORD': '13anguloX',
     }
 }
-
-DATABASES['default'] = 'myshares.cnmy06y44h6n.us-east-1.rds.amazonaws.com'.config(conn_max_age=600, ssl_require=True)
-DATABASES['default']['OPTIONS']['charset'] = 'utf8mb4'
-del DATABASES['default']['OPTIONS']['sslmode'] 
-DATABASES['default']['OPTIONS']['ssl'] =  {'ca': os.environ.get('MYSQL_ATTR_SSL_CA')}
 
 
 # Password validation
