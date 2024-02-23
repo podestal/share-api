@@ -10,11 +10,5 @@
         "config": {
           "distDir": "staticfiles_build"
         }
-      }],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "share/wsgi.py"
-        }
-    ]
+      }]
 }
