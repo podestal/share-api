@@ -182,8 +182,7 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "http://myshare-web.s3-website-us-east-1.amazonaws.com",
-    # "http://myshare-web.s3-website-us-east-1.amazonaws.com:5173",
+    "https://thunderous-babka-3d91ab.netlify.app/",
 ]
 
 PASSWORD_RESET_CONFIRM_RETYPE  = True
@@ -194,7 +193,7 @@ DJOSER = {
     'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'ACTIVATION_URL': 'activate/{uid}/{token}',
-    # 'SEND_ACTIVATION_EMAIL': True,
+    'SEND_ACTIVATION_EMAIL': True,
     'SEND_CONFIRMATION_EMAIL': True,
     'EMAIL': {
             'activation': 'core.email.ActivationEmailCustomized',
