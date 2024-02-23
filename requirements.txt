@@ -15,7 +15,6 @@ djoser==2.2.2
 drf-nested-routers==0.93.5
 gunicorn==21.2.0
 idna==3.6
-mysqlclient==2.2.4
 oauthlib==3.2.2
 packaging==23.2
 pillow==10.2.0
