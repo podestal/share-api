@@ -14,11 +14,11 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
-import mimetypes
+# import mimetypes
 import dj_database_url
 
 
-mimetypes.add_type("text/css", ".css", True)
+# mimetypes.add_type("text/css", ".css", True)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
