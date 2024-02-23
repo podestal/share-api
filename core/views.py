@@ -9,13 +9,13 @@ def payment_confirmation(request, email):
             template_name='emails/payment.html',
         )
         message.send([email])
-
+    
     except BadHeaderError:
         pass
     return HttpResponse('Ok') 
 
 def activate(request, uid, token):
-    return HttpResponseRedirect(f'http://myshare-web.s3-website-us-east-1.amazonaws.com/activate/{uid}/{token}')
+    return HttpResponseRedirect(f'https://thunderous-babka-3d91ab.netlify.app/activate/{uid}/{token}')
 
 def reset_password(request, uid, token):
-    return HttpResponseRedirect(f'http://myshare-web.s3-website-us-east-1.amazonaws.com/reset_new/{uid}/{token}')
+    return HttpResponseRedirect(f'https://thunderous-babka-3d91ab.netlify.app/reset_new/{uid}/{token}')
