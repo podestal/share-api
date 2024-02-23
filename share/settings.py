@@ -14,11 +14,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
-# import mimetypes
-import dj_database_url
 
 
-# mimetypes.add_type("text/css", ".css", True)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -106,7 +103,7 @@ DATABASES = {
     }
 }
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES['default'] = 'myshares.cnmy06y44h6n.us-east-1.rds.amazonaws.com'.config(conn_max_age=600, ssl_require=True)
 DATABASES['default']['OPTIONS']['charset'] = 'utf8mb4'
 del DATABASES['default']['OPTIONS']['sslmode'] 
 DATABASES['default']['OPTIONS']['ssl'] =  {'ca': os.environ.get('MYSQL_ATTR_SSL_CA')}
