@@ -2,7 +2,7 @@ asgiref==3.7.2
 certifi==2024.2.2
 cffi==1.16.0
 charset-normalizer==3.3.2
-cryptography==42.0.4
+cryptography==42.0.5
 defusedxml==0.8.0rc2
 dj-database-url==2.1.0
 Django==5.0.2
@@ -15,13 +15,16 @@ djoser==2.2.2
 drf-nested-routers==0.93.5
 gunicorn==21.2.0
 idna==3.6
-mysqlclient==2.2.4
+iniconfig==2.0.0
 oauthlib==3.2.2
 packaging==23.2
 pillow==10.2.0
+pluggy==1.4.0
 pycparser==2.21
 PyJWT==2.8.0
 PyMySQL==1.1.0
+pytest==8.0.1
+pytest-django==4.8.0
 python-dotenv==1.0.1
 python3-openid==3.2.0
 pytz==2024.1

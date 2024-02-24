@@ -16,6 +16,8 @@ python-dotenv = "*"
 gunicorn = "*"
 pymysql = "*"
 dj-database-url = "*"
+pytest = "*"
+pytest-django = "*"
 
 [dev-packages]
 
