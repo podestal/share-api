@@ -4,6 +4,7 @@ from datetime import datetime
 from django_filters import FilterSet
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend, MultipleChoiceFilter
+from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
@@ -44,13 +45,15 @@ class AccountViewSet(ModelViewSet):
 
     queryset = models.Account.objects.all()
     serializer_class = serializers.AccountSerializer
+    permission_classes = [permissions.IsAdminOrReadOnly]
 
 
-class ScreeViewSet(ModelViewSet):
+class ScreenViewSet(ModelViewSet):
     queryset = models.Screen.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['available', 'service', 'customer']
     http_method_names = ['get', 'post', 'patch', 'delete']
+    permission_classes = [permissions.IsAdminOrReadAndPatch]
     
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -58,6 +61,8 @@ class ScreeViewSet(ModelViewSet):
         if self.request.method == 'PATCH':
             return serializers.UpdateScreenSerializer
         return serializers.GetScreenSerializer
+    
+
 
     
 class CustomerViewSet(ModelViewSet):
@@ -111,7 +116,6 @@ class OrderViewSet(ModelViewSet):
     def get_queryset(self):
         if self.request.user.is_staff:
             return models.Order.objects.all()
-        return models.Order.objects.all()
 
 class OrderReceiptViewSet(ModelViewSet):
     

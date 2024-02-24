@@ -4,7 +4,6 @@ from rest_framework.test import APIClient
 import pytest
 
 @pytest.mark.django_db
-
 class TestGetService:
 
     def test_if_user_anonymus_returns_200(self):
