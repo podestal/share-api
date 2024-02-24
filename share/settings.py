@@ -26,7 +26,7 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-dhkvpy6=jvd28)(_wyp3aca+@h$h%6wh=g3(yenu&*+qmw718z'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,10 +85,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'share.wsgi.application'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'mysharessoporte@gmail.com'
-EMAIL_HOST_PASSWORD = 'bdcoqxyjhsihaoho'
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 EMAIL_USE_TLS = True
 
 # Database
@@ -97,10 +97,10 @@ EMAIL_USE_TLS = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'myshares',
-        'HOST': 'myshares.cnmy06y44h6n.us-east-1.rds.amazonaws.com',
-        'USER': 'admin',
-        'PASSWORD': '13anguloX',
+        'NAME': os.environ.get('DB_AWS_NAME'),
+        'HOST': os.environ.get('DB_AWS_HOST'),
+        'USER': os.environ.get('DB_AWS_USER'),
+        'PASSWORD': os.environ.get('DB_AWS_PASSWORD'),
     }
 }
 
@@ -182,7 +182,7 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://thunderous-babka-3d91ab.netlify.app/",
+    "https://thunderous-babka-3d91ab.netlify.app",
 ]
 
 PASSWORD_RESET_CONFIRM_RETYPE  = True
