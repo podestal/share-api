@@ -177,6 +177,7 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://thunderous-babka-3d91ab.netlify.app",
+    "https://myshares-web.com/",
 ]
 
 PASSWORD_RESET_CONFIRM_RETYPE  = True
