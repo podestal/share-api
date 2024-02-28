@@ -5,7 +5,7 @@ from django_filters import FilterSet
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend, MultipleChoiceFilter
 from rest_framework.mixins import CreateModelMixin
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -53,8 +53,7 @@ class ScreenViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['available', 'service', 'customer']
     http_method_names = ['get', 'post', 'patch', 'delete']
-    permission_classes = [permissions.IsAdminOrReadAndPatch]
-    
+
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return serializers.CreateScreenSerializer
@@ -62,8 +61,12 @@ class ScreenViewSet(ModelViewSet):
             return serializers.UpdateScreenSerializer
         return serializers.GetScreenSerializer
     
-
-
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return[AllowAny()]
+        if self.request.method in ['POST', 'DELETE']:
+            return [IsAdminUser()]
+        return [IsAuthenticated()]
     
 class CustomerViewSet(ModelViewSet):
     # permission_classes = [IsAuthenticated]
@@ -84,9 +87,7 @@ class CustomerViewSet(ModelViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def me(self, request):
-        print('user id',self.request.user.id)
         (customer, created) = models.Customer.objects.get_or_create(user_id=self.request.user.id)
-        print('customers', customer)
         serializer = serializers.CustomerSerializer(customer)
         return Response(serializer.data)
     

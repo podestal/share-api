@@ -96,10 +96,10 @@ EMAIL_USE_TLS = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_AWS_NAME'),
-        'HOST': os.environ.get('DB_AWS_HOST'),
-        'USER': os.environ.get('DB_AWS_USER'),
-        'PASSWORD': os.environ.get('DB_AWS_PASSWORD'),
+        'NAME': os.environ.get('DB_NAME'),
+        'HOST': os.environ.get('DB_HOST'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
     }
 }
 

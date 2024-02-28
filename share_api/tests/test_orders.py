@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from model_bakery import baker
-from share_api.models import Customer, Service
+from share_api.models import Customer, Service, Order
 from rest_framework import status
 from rest_framework.test import APIClient
 import pytest
@@ -39,7 +39,7 @@ class TestCreateOrders:
         service = baker.make(Service)
 
         client = APIClient()
-        client.force_authenticate(user=User)   
+        client.force_authenticate(user=User(is_staff=False))   
         response = client.post('/api/orders/', {
             'total': 45.00,
             'customer': customer.pk,
@@ -49,3 +49,39 @@ class TestCreateOrders:
         })
         print('RESPONSE DATA', response.data)
         assert response.status_code == status.HTTP_201_CREATED
+
+    def test_if_user_is_staff_returns_201(self):
+
+        customer = baker.make(Customer)
+        service = baker.make(Service)
+
+        client = APIClient()
+        client.force_authenticate(user=User(is_staff=True))   
+        response = client.post('/api/orders/', {
+            'total': 45.00,
+            'customer': customer.pk,
+            'service': service.pk,
+            'days': 90,
+            'period': 'T'
+        })
+        print('RESPONSE DATA', response.data)
+        assert response.status_code == status.HTTP_201_CREATED
+
+@pytest.mark.django_db
+class TestUpdateOrders:
+
+    def test_if_user_anonymus_returns_401(self):
+        order = baker.make(Order)
+        client = APIClient()
+        response = client.patch(f'/api/orders/{order.id}/')
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_if_user_is_staff_returns_200(self):
+        order = baker.make(Order)
+        client = APIClient()
+        client.force_authenticate(user=User(is_staff=True))   
+        response = client.patch(f'/api/orders/{order.id}/', {
+            'status': 'P'
+        })
+        assert response.status_code == status.HTTP_200_OK
+
