@@ -3,10 +3,11 @@ from django.core.mail import BadHeaderError
 from django.http import HttpResponseRedirect   
 from templated_mail.mail import BaseEmailMessage
 
-def payment_confirmation(request, email):
+def payment_confirmation(request, email, username, password, profile):
     try:
         message = BaseEmailMessage(
             template_name='emails/payment.html',
+            context={'username': username, 'password': password, 'profile': profile}
         )
         message.send([email])
     

@@ -3,7 +3,11 @@ Confirmación de pago
 {% endblock %}
 {% block html_body%}
 <h1>Estimado usuario:</h1>
-<p>El presente correo es para informarle que su pago ha sido confirmado
-    puede encontrar sus credenciales de accesso en la parte de subscripciones</p>
+<p>El presente correo es para informarle que su pago ha sido confirmado</p>
+<p>Sus credenciales son las siguientes:</p>
+<p>Usuario: {{ username }}</p>
+<p>Contraseña: {{ password }}</p>
+<h2>Recuerde utilizar el perfil número {{ profile }}</h2>
+<p>Recuerde que siempre puede encontrar esta información en la parte de subscripciones</p>
 <p>Muchas gracias por utilizar MyShares</p>
 {% endblock %}

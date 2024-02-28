@@ -146,6 +146,7 @@ class AdminOrderSerializer(serializers.ModelSerializer):
     service = ServiceSerializer()
     order_receipt = OrderReceiptSerializer(many=True)
     customer = CustomerSerializer()
+    screen = GetScreenSerializer()
 
     class Meta:
         model = models.Order
