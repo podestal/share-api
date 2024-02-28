@@ -15,7 +15,7 @@ def payment_confirmation(request, email):
     return HttpResponse('Ok') 
 
 def activate(request, uid, token):
-    return HttpResponseRedirect(f'https://thunderous-babka-3d91ab.netlify.app/activate/{uid}/{token}')
+    return HttpResponseRedirect(f'https://myshares-web.com/activate/{uid}/{token}/')
 
 def reset_password(request, uid, token):
-    return HttpResponseRedirect(f'https://thunderous-babka-3d91ab.netlify.app/reset_new/{uid}/{token}')
+    return HttpResponseRedirect(f'https://myshares-web.com/reset_new/{uid}/{token}/')
