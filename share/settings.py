@@ -96,10 +96,10 @@ EMAIL_USE_TLS = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME'),
-        'HOST': os.environ.get('DB_HOST'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'NAME': os.environ.get('DB_AWS_NAME'),
+        'HOST': os.environ.get('DB_AWS_HOST'),
+        'USER': os.environ.get('DB_AWS_USER'),
+        'PASSWORD': os.environ.get('DB_AWS_PASSWORD'),
     }
 }
 
@@ -202,3 +202,15 @@ DJOSER = {
         'user_create': 'core.serializers.CreateUserSerializer',
     },
 }
+
+# AWS S3 bucket for imgs
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_SIGNATURE_NAME = os.environ.get('AWS_S3_SIGNATURE_NAME')
+AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME')
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL =  None
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGES = 'storages.backends.s3boto3.S3Boto3Storage'
