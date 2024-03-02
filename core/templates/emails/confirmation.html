@@ -4,5 +4,6 @@ Su cuenta se ha activado de manera exitosa
 {% block html_body%}
 <h1>Estimado usuario:</h1>
 <p>Su cuenta ha sido creada y está lista para ser utilizada</p>
+<p>Recuerde que su usuario es: <b>{{ user.get_username }}</b></p>   
 <p>Muchas gracias por utilizar MyShares</p>
 {% endblock %}

@@ -81,8 +81,8 @@ class CustomerViewSet(ModelViewSet):
     
     def get_queryset(self):
         if self.request.user.is_staff:
-            return models.Customer.objects.all()
-        return models.Customer.objects.filter(user_id=self.request.user.id)
+            return models.Customer.objects.select_related('user')
+        return models.Customer.objects.filter(user_id=self.request.user.id).select_related('user')
         
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
