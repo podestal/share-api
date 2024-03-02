@@ -24,14 +24,14 @@ class FeatureFilter(FilterSet):
         fields = '__all__'
 
 class FeatureViewSet(ModelViewSet):
-    queryset = models.Feature.objects.all()
+    queryset = models.Feature.objects.select_related('service')
     serializer_class = serializers.FeaturesSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['service']
     filter_class = FeatureFilter
 
 class ServiceViewSet(ModelViewSet):
-    queryset = models.Service.objects.all()
+    queryset = models.Service.objects.prefetch_related('features', 'screens')
 
     permission_classes = [permissions.IsAdminOrReadOnly]
 
@@ -49,7 +49,7 @@ class AccountViewSet(ModelViewSet):
 
 
 class ScreenViewSet(ModelViewSet):
-    queryset = models.Screen.objects.all()
+    queryset = models.Screen.objects.prefetch_related('service')
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['available', 'service', 'customer']
     http_method_names = ['get', 'post', 'patch', 'delete']
@@ -112,11 +112,11 @@ class OrderViewSet(ModelViewSet):
             return serializers.UpdateOrderSerializer
         if self.request.user.is_staff:
             return serializers.AdminOrderSerializer
-        return serializers.OrderSerializer
+
     
     def get_queryset(self):
         if self.request.user.is_staff:
-            return models.Order.objects.all()
+            return models.Order.objects.prefetch_related('order_receipt')
 
 class OrderReceiptViewSet(ModelViewSet):
     

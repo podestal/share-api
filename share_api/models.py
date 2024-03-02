@@ -49,7 +49,7 @@ class Screen(models.Model):
     created_at = models.DateField(auto_now=True)    
     bulk = models.BooleanField(default=False)
     available = models.BooleanField(default=True)
-    service = models.ForeignKey(Service, on_delete=models.PROTECT)
+    service = models.ForeignKey(Service, on_delete=models.PROTECT, related_name='screens')
     position = models.SmallIntegerField(null=True, blank=True)
     username = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
@@ -79,12 +79,18 @@ class Order(models.Model):
     
     createdAt = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_STARTED)
-    screen = models.ForeignKey(Screen, on_delete=models.PROTECT, null=True)
     period = models.CharField(max_length=1)
-    service = models.ForeignKey(Service, on_delete=models.PROTECT)
     days = models.SmallIntegerField()
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
     total = models.DecimalField(max_digits=6, decimal_places=2)
+    customer_first_name = models.CharField(max_length=255)
+    customer_last_name = models.CharField(max_length=255)
+    customer_id = models.CharField(max_length=255)
+    customer_email = models.CharField(max_length=255)
+    screen_username = models.CharField(max_length=255)
+    screen_password = models.CharField(max_length=255)
+    screen_profile = models.CharField(max_length=255)
+    screen_id = models.SmallIntegerField()
+    service_platform = models.CharField(max_length=255)
 
 class OrderReceipt(models.Model):
 

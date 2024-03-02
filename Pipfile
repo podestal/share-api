@@ -21,6 +21,7 @@ pytest-django = "*"
 model-bakery = "*"
 boto3 = "*"
 django-storages = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 

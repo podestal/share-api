@@ -11,17 +11,29 @@ class FeaturesSerializer(serializers.ModelSerializer):
         model = models.Feature
         fields = '__all__'
 
+class GetSimpleScreenSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Screen
+        fields = ['id', 'available']
+
+
 class ServiceSerializer(serializers.ModelSerializer):
 
-    screens = serializers.SerializerMethodField(method_name='get_active_screens')
+    screens = GetSimpleScreenSerializer(many=True)
     features = FeaturesSerializer(many=True)
 
     class Meta:
         model = models.Service
         fields = ['id', 'created_at', 'platform', 'comercial_name', 'screen_limit', 'price', 'screens', 'features']
 
-    def get_active_screens(self, service:models.Service):
-        return (models.Screen.objects.filter(service_id = service.id, available=True)).count()
+    
+class GetSimpleServiceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Service
+        fields = ['id', 'created_at', 'platform', 'comercial_name', 'screen_limit', 'price']
+
 
 class CreateServiceSerializer(serializers.ModelSerializer):
 
@@ -38,7 +50,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
 class GetScreenSerializer(serializers.ModelSerializer):
 
-    service = ServiceSerializer()
+    service = GetSimpleServiceSerializer()
 
     class Meta:
         model = models.Screen
@@ -107,7 +119,7 @@ class CreateOrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Order
-        fields = ['id', 'status', 'total', 'customer', 'screen', 'service', 'days', 'period']
+        fields = ['id', 'screen_id', 'customer_id', 'customer_email', 'screen_username', 'screen_password', 'screen_profile', 'status', 'total', 'days', 'period', 'customer_first_name', 'customer_last_name', 'service_platform']
 
 
 class OrderReceiptSerializer(serializers.ModelSerializer):
@@ -132,23 +144,11 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
         model = models.Order
         fields = ['status']
 
-class OrderSerializer(serializers.ModelSerializer):
-
-    service = ServiceSerializer()
-    order_receipt = OrderReceiptSerializer(many=True, read_only=True)
-    customer = CustomerSerializer()
-    class Meta:
-        model = models.Order
-        fields = ['id', 'days', 'total', 'status', 'customer', 'screen', 'service', 'order_receipt']
-
 class AdminOrderSerializer(serializers.ModelSerializer):
 
-    service = ServiceSerializer()
     order_receipt = OrderReceiptSerializer(many=True)
-    customer = CustomerSerializer()
-    screen = GetScreenSerializer()
 
     class Meta:
         model = models.Order
-        fields = ['id', 'days', 'total', 'status', 'period', 'customer', 'screen', 'service', 'order_receipt']
+        fields = ['id', 'screen_id', 'customer_id', 'customer_email', 'screen_username', 'screen_password', 'screen_profile', 'days', 'total', 'status', 'period', 'order_receipt', 'customer_first_name', 'customer_last_name', 'service_platform']
 

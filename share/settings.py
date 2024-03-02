@@ -48,10 +48,12 @@ INSTALLED_APPS = [
     'corsheaders',
     'share_api',
     'core',
+    "debug_toolbar",
 
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -96,10 +98,10 @@ EMAIL_USE_TLS = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_AWS_NAME'),
-        'HOST': os.environ.get('DB_AWS_HOST'),
-        'USER': os.environ.get('DB_AWS_USER'),
-        'PASSWORD': os.environ.get('DB_AWS_PASSWORD'),
+        'NAME': os.environ.get('DB_NAME'),
+        'HOST': os.environ.get('DB_HOST'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
     }
 }
 
@@ -214,3 +216,8 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL =  None
 AWS_S3_VERITY = True
 DEFAULT_FILE_STORAGES = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
