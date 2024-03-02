@@ -35,34 +35,42 @@ class TestCreateOrders:
 
     def test_if_user_is_not_staff_returns_201(self):
 
-        customer = baker.make(Customer)
-        service = baker.make(Service)
-
         client = APIClient()
         client.force_authenticate(user=User(is_staff=False))   
         response = client.post('/api/orders/', {
             'total': 45.00,
-            'customer': customer.pk,
-            'service': service.pk,
+            'customer_first_name': 'test name',
+            'customer_last_name': 'test name',
+            'customer_id': '14',
+            'customer_email': 'test email',
+            'screen_username': 'test username',
+            'screen_password': 'test password',
+            'screen_profile': 'test profile',
+            'screen_id': 14,
+            'service_platform': 'platform test',
             'days': 90,
-            'period': 'T'
+            'period': 'T',
         })
         print('RESPONSE DATA', response.data)
         assert response.status_code == status.HTTP_201_CREATED
 
     def test_if_user_is_staff_returns_201(self):
 
-        customer = baker.make(Customer)
-        service = baker.make(Service)
-
         client = APIClient()
         client.force_authenticate(user=User(is_staff=True))   
         response = client.post('/api/orders/', {
             'total': 45.00,
-            'customer': customer.pk,
-            'service': service.pk,
+            'customer_first_name': 'test name',
+            'customer_last_name': 'test name',
+            'customer_id': '14',
+            'customer_email': 'test email',
+            'screen_username': 'test username',
+            'screen_password': 'test password',
+            'screen_profile': 'test profile',
+            'screen_id': 14,
+            'service_platform': 'platform test',
             'days': 90,
-            'period': 'T'
+            'period': 'T',
         })
         print('RESPONSE DATA', response.data)
         assert response.status_code == status.HTTP_201_CREATED
