@@ -5,6 +5,8 @@ from uuid import uuid4
 from datetime import date
 from core.serializers import UserSerializer
 
+DOLAR_TO_PEN = 3.7
+
 class FeaturesSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -30,9 +32,27 @@ class ServiceSerializer(serializers.ModelSerializer):
     
 class GetSimpleServiceSerializer(serializers.ModelSerializer):
 
+    one_price = serializers.SerializerMethodField('get_one_month_price')
+    three_price = serializers.SerializerMethodField('get_three_month_price')
+    six_price = serializers.SerializerMethodField('get_six_month_price')
+    nine_price = serializers.SerializerMethodField('get_nine_month_price')
+
     class Meta:
         model = models.Service
-        fields = ['id', 'created_at', 'platform', 'comercial_name', 'screen_limit', 'price']
+        fields = ['id', 'created_at', 'platform', 'comercial_name', 'screen_limit', 'price', 'one_price', 'three_price', 'six_price', 'nine_price']
+
+
+    def get_one_month_price(self, service: models.Service):
+        return round(float(service.price) * DOLAR_TO_PEN, 2)
+    
+    def get_three_month_price(self, service: models.Service):
+        return round(((float(service.price) * DOLAR_TO_PEN) * 0.97), 2)
+    
+    def get_six_month_price(self, service: models.Service):
+        return round(((float(service.price) * DOLAR_TO_PEN) * 0.94), 2)
+    
+    def get_nine_month_price(self, service: models.Service):
+        return round(((float(service.price) * DOLAR_TO_PEN) * 0.91), 2)
 
 
 class CreateServiceSerializer(serializers.ModelSerializer):

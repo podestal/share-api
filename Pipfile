@@ -22,6 +22,8 @@ model-bakery = "*"
 boto3 = "*"
 django-storages = "*"
 django-debug-toolbar = "*"
+whitenoise = "*"
+locust = "*"
 
 [dev-packages]
 
