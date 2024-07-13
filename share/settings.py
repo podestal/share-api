@@ -96,13 +96,23 @@ EMAIL_USE_TLS = True
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.environ.get('DB_TEST_NAME'),
+#         'HOST': os.environ.get('DB_TEST_HOST'),
+#         'USER': os.environ.get('DB_TEST_USER'),
+#         'PASSWORD': os.environ.get('DB_TEST_PASSWORD'),
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_TEST_NAME'),
-        'HOST': os.environ.get('DB_TEST_HOST'),
-        'USER': os.environ.get('DB_TEST_USER'),
-        'PASSWORD': os.environ.get('DB_TEST_PASSWORD'),
+        'NAME': 'myshares',
+        'HOST': 'myshares.cxai828s6j8h.us-east-1.rds.amazonaws.com',
+        'USER': 'podestal',
+        'PASSWORD': '13anguloX',
     }
 }
 
